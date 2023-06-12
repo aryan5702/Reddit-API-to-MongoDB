@@ -10,8 +10,6 @@ public interface SubsRepo extends MongoRepository<Subs,String> {
     public List<Subs> findByActiveusercount(int count);
     public List<Subs> findByKeycolor(String c);
 
-   // public List<Subs> findByIconimg(String i);
-
     public List<Subs> findBySubscribercount(int i);
 
     public List<Subs> findByAllowimages(Boolean b);
