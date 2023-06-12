@@ -7,10 +7,10 @@ import java.util.List;
 
 @Repository
 public interface SubsRepo extends MongoRepository<Subs,String> {
-    public List<Subs> findByActiveusercount(int count);
-    public List<Subs> findByKeycolor(String c);
+    public List<Subs> findByActiveUserCount(int count);
+    public List<Subs> findByKeyColor(String c);
 
-    public List<Subs> findBySubscribercount(int i);
+    public List<Subs> findBySubscriberCount(int i);
 
-    public List<Subs> findByAllowimages(Boolean b);
+    public List<Subs> findByAllowImages(Boolean b);
 }

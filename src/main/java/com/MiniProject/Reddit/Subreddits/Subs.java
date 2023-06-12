@@ -5,21 +5,21 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-@Document(collection="subreddits")
+@Document(collection="subreddits") //shift + f6
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Subs {
     @Id
     private String name;
     @JsonProperty("active_user_count")
-    private int activeusercount;
+    private int activeUserCount;
     @JsonProperty("icon_img")
-    private String iconimg=null;
+    private String iconImg=null;
     @JsonProperty("key_color")
-    private String keycolor;
+    private String keyColor;
     @JsonProperty("subscriber_count")
-    private int subscribercount;
+    private int subscriberCount;
     @JsonProperty("allow_images")
-    private boolean allowimages;
+    private boolean allowImages;
     //camel case in java
     // refresh token
     // formulate
@@ -32,43 +32,43 @@ public class Subs {
         this.name = name;
     }
 
-    public int getActiveusercount() {
-        return activeusercount;
+    public int getActiveUserCount() {
+        return activeUserCount;
     }
 
-    public void setActiveusercount(int activeusercount) {
-        this.activeusercount = activeusercount;
+    public void setActiveUserCount(int activeUserCount) {
+        this.activeUserCount = activeUserCount;
     }
 
-    public String getIconimg() {
-        return iconimg;
+    public String getIconImg() {
+        return iconImg;
     }
 
-    public void setIconimg(String iconimg) {
-        this.iconimg = iconimg;
+    public void setIconImg(String iconImg) {
+        this.iconImg = iconImg;
     }
 
-    public String getKeycolor() {
-        return keycolor;
+    public String getKeyColor() {
+        return keyColor;
     }
 
-    public void setKeycolor(String keycolor) {
-        this.keycolor = keycolor;
+    public void setKeyColor(String keyColor) {
+        this.keyColor = keyColor;
     }
 
-    public int getSubscribercount() {
-        return subscribercount;
+    public int getSubscriberCount() {
+        return subscriberCount;
     }
 
-    public void setSubscribercount(int subscribercount) {
-        this.subscribercount = subscribercount;
+    public void setSubscriberCount(int subscriberCount) {
+        this.subscriberCount = subscriberCount;
     }
 
-    public boolean isAllowimages() {
-        return allowimages;
+    public boolean isAllowImages() {
+        return allowImages;
     }
 
-    public void setAllowimages(boolean allowimages) {
-        this.allowimages = allowimages;
+    public void setAllowImages(boolean allowImages) {
+        this.allowImages = allowImages;
     }
 }

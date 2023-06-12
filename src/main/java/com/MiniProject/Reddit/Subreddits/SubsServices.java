@@ -16,7 +16,7 @@ public class SubsServices {
     private MongoTemplate mongoTemplate;
 
     public Subs Save(Subs name){
-        return repo.save(name);
+        return repo.insert(name);
     }
 
     public List<Subs> ViewAll(){
@@ -28,28 +28,28 @@ public class SubsServices {
     }
 
     public List<Subs> ViewByUserCount(int count){
-        return repo.findByActiveusercount(count);
+        return repo.findByActiveUserCount(count);
     }
 
     public List<Subs> ViewBySubsCount(int count){
-        return repo.findBySubscribercount(count);
+        return repo.findBySubscriberCount(count);
     }
 
     public List<Subs> ViewByColour(String c){
-        return repo.findByKeycolor(c);
+        return repo.findByKeyColor(c);
     }
 
     public List<Subs> ViewByAllowImg(Boolean b){
-        return repo.findByAllowimages(b);
+        return repo.findByAllowImages(b);
     }
 
     public Subs Update(Subs sub){
         Subs curr=repo.findById(sub.getName()).get();
-        curr.setKeycolor(sub.getKeycolor());
-        curr.setIconimg(sub.getIconimg());
-        curr.setAllowimages(sub.isAllowimages());
-        curr.setSubscribercount(sub.getSubscribercount());
-        curr.setActiveusercount(sub.getActiveusercount());
+        curr.setKeyColor(sub.getKeyColor());
+        curr.setIconImg(sub.getIconImg());
+        curr.setAllowImages(sub.isAllowImages());
+        curr.setSubscriberCount(sub.getSubscriberCount());
+        curr.setActiveUserCount(sub.getActiveUserCount());
         return repo.save(curr);
     }
 

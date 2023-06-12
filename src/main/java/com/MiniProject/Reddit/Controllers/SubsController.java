@@ -1,5 +1,6 @@
 package com.MiniProject.Reddit.Controllers;
 
+import com.MiniProject.Reddit.Subreddits.Creds;
 import com.MiniProject.Reddit.Subreddits.MetaData;
 import com.MiniProject.Reddit.Subreddits.Subs;
 import com.MiniProject.Reddit.Subreddits.SubsServices;
@@ -7,6 +8,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
+import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
@@ -20,17 +22,17 @@ public class SubsController {
     private SubsServices services;
     @Autowired
     private Environment env;
+    @Autowired
+    private MongoTemplate mongoTemplate;
 
     private String getAuthToken(){
         RestTemplate restTemplate = new RestTemplate();
         HttpHeaders headers = new HttpHeaders();
-        //Different login details as I had to re-create the app
-        headers.setBasicAuth("RKNxGgYWSxbkdrClgMRL6g", "dEuhKlpimxfBGgyf8l-lIvW7mc1y8g");
+        headers.setBasicAuth("OLqxtUHKtuJA-Unqr_WhEg", "uGINE3QqcSDeVWMa8BfPg9W4zMlKWA");
         headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
-        headers.put("User-Agent", Collections.singletonList("https://www.reddit.com/prefs/apps"));
-        String password=env.getProperty("password");
-        String user=env.getProperty("user");
-        String body = "grant_type=password&username="+user+"&password="+password;
+        headers.put("User-Agent", Collections.singletonList("tomcat:com.e4developer.e4reddit-test:v1.0 (by /u/bartoszjd)"));
+        Creds creds=new Creds();
+        String body = "grant_type=password&username="+creds.getUser()+"&password="+creds.getPassword();
         HttpEntity<String> request = new HttpEntity<>(body, headers);
         String authUrl = "https://www.reddit.com/api/v1/access_token";
         ResponseEntity<String> response = restTemplate.postForEntity(authUrl, request, String.class);
@@ -45,10 +47,10 @@ public class SubsController {
         }
         return String.valueOf(map.get("access_token"));
     }
-    @PostMapping
-    public String Store(){
+    @PostMapping("/{sub}")//Send payload or as a query
+    public String Store(@PathVariable String sub){
 
-        String uri="https://oauth.reddit.com/api/search_subreddits?query=reddit";
+        String uri="https://oauth.reddit.com/api/search_subreddits?query="+sub;
         RestTemplate template=new RestTemplate();
         HttpHeaders headers = new HttpHeaders();
         String token=getAuthToken();
@@ -59,7 +61,7 @@ public class SubsController {
         MetaData wrapper=null;
         try{
             wrapper=objectmapper.readValue(objects.getBody(), MetaData.class);
-            for(Subs s:wrapper.getSubreddits()) services.Save(s);
+            for(Subs s:wrapper.getSubreddits()) mongoTemplate.save(s);
             return "Data Stored Successfully\n";
         }
         catch(Exception e){
@@ -119,7 +121,7 @@ public class SubsController {
         Collections.sort(subs, new Comparator<Subs>(){
             public int compare(Subs a, Subs b)
             {
-                return (a.getSubscribercount())-(b.getSubscribercount());
+                return (a.getSubscriberCount())-(b.getSubscriberCount());
             }
         });
         return subs;
@@ -131,7 +133,7 @@ public class SubsController {
         Collections.sort(subs, new Comparator<Subs>(){
             public int compare(Subs a, Subs b)
             {
-                return (a.getActiveusercount())-(b.getActiveusercount());
+                return (a.getActiveUserCount())-(b.getActiveUserCount());
             }
         });
         return subs;
