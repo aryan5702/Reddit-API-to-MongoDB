@@ -1,8 +1,8 @@
 package com.MiniProject.Reddit.Subreddits;
 
 public class Creds {
-    private String user="bruh_lyf";
-    private String password="Regit@5702";
+    private String user="";
+    private String password="";
 
     public String getUser() {
         return user;
