@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-@Document(collection="subreddits") //shift + f6
+@Document(collection="subreddits")
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Subs {
     @Id
@@ -20,9 +20,6 @@ public class Subs {
     private int subscriberCount;
     @JsonProperty("allow_images")
     private boolean allowImages;
-    //camel case in java
-    // refresh token
-    // formulate
 
     public String getName() {
         return name;
